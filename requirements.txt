@@ -1,0 +1,7 @@
+vllm==0.8.5.post1
+datasets==3.5.0
+tiktoken==0.9.0
+sympy==1.13.1
+pylatexenc==2.10
+openai==1.79.0
+pytorch_lightning==2.5.1
