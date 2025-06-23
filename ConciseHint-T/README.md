@@ -16,8 +16,7 @@ pip install -r requirements.txt
 ### 1. Prepare training data (MixChain-Z-GSM8K)
 
 ```bash
-CUDA_VISIBLE_DEVICES=0 vllm serve Qwen/Qwen3-4B --enable-reasoning \
---reasoning-parser deepseek_r1  --enable-prefix-caching --max_model_len 25000  --port 8000
+python data_utils.py
 ```
 
 ### 2. Finetune hint embeddings on MixChain-Z-GSM8K
