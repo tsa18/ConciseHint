@@ -1,0 +1,7 @@
+transformers==4.51.1
+accelerate==1.7.0
+datasets
+peft==0.15.2
+pytorch_lightning
+tiktoken  
+pylatexenc
