@@ -68,9 +68,6 @@ class ConciseTuningConfig(PromptTuningConfig):
     use_concise_tuning: bool = field(
         default=True,
     )
-    fixed_interval: int = field(
-        default=128,
-    )
 
 
 if __name__ == '__main__':
@@ -86,7 +83,6 @@ if __name__ == '__main__':
         prompt_tuning_init_text=init_prompt,
         tokenizer_name_or_path="Qwen/Qwen3-1.7B",
         use_concise_tuning= True,
-        fixed_interval = 128
     )
 
 

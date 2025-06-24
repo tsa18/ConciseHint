@@ -74,9 +74,7 @@ class ConciseTuningConfig(PromptTuningConfig):
     use_concise_tuning: bool = field(
         default=True,
     )
-    fixed_interval: int = field(
-        default=128,
-    )
+   
 
 def parse_args():
     parser = argparse.ArgumentParser(description="ConciseHint Experiment")
@@ -148,12 +146,6 @@ def eval_results(dataset, results, targets):
         else:
             raise NotImplementedError
         correct_num += correct
-        if not correct:
-            print('-'*50)
-            print('not correct start')
-            print("result:",result)
-            print("target:",target)
-            print('-'*50)
                 
     accuracy = correct_num/len(results)
     return accuracy
@@ -181,11 +173,10 @@ def execute_questions_batch(
         
     else:
         prepared_prompts = [  f"<|im_start|>user\n{prompt}" + "\nPut your final answer within \\boxed{}.<|im_end|>" + "\n<|im_start|>assistant\n" + '<think>' for prompt in questions_batch]
-    print(tokenizer.pad_token)
+    # print(tokenizer.pad_token)
     model_inputs = tokenizer(prepared_prompts,  padding=True, return_tensors="pt").to(device)
     input_ids =  model_inputs.input_ids
     base_len = 128
-    model.peft_config['default'].fixed_interval = base_len
     model.peft_config['default'].intervals = [base_len]
 
     results = [None]*len( prepared_prompts)
@@ -222,15 +213,11 @@ def execute_questions_batch(
                 token_num_o1 = token_measure_o1( tokenizer.decode(output_ids[i], skip_special_tokens=True) )
                 total_tokens_num += token_num 
                 total_tokens_num_o1 +=   token_num_o1 
-                print('='*50)
-                print(response)
-                print('token num: ', token_num, 'o1 token num: ', token_num_o1)
-                print('='*50)
+                
             # Check if reach the maximun token length
             # elif output_ids[i].shape[0]> max_token_length: 
             elif token_measure_o1( tokenizer.decode(output_ids[i], skip_special_tokens=True) ) > max_token_length: 
                 logger.info(f"Token length={output_ids[i].shape[0]}, Exceed max len, truncate.")
-                logger.info('='*50)
                 response = tokenizer.decode(output_ids[i], skip_special_tokens=False)  # Save sequence
                 save_index = indices[i]
                 results[save_index] = response.replace(prepared_prompts[save_index], "")
@@ -239,13 +226,7 @@ def execute_questions_batch(
                 token_num_o1 = token_measure_o1( tokenizer.decode(output_ids[i], skip_special_tokens=True) )
                 total_tokens_num +=token_num
                 total_tokens_num_o1 +=   token_num_o1 
-                logger.info(response)
-                # logger.info('='*50)
-                print('='*50)
-                print(f"Token length={output_ids[i].shape[0]}, Exceed max len, truncate.")
-                print(response)
-                print('token num: ', token_num, 'o1 token num: ', token_num_o1)
-                print('='*50)
+                
             else:
                 new_input_ids.append(output_ids[i])    # Retain for next iteration
         
@@ -285,7 +266,6 @@ if __name__ == '__main__':
         prompt_tuning_init_text= ori_config.prompt_tuning_init_text,
         tokenizer_name_or_path=ori_config.tokenizer_name_or_path,
         use_concise_tuning= True,
-        fixed_interval = 128
     )
     model.peft_config['default'] = concise_config
     from my_peft_model_function import my_prepare_inputs_for_generation
