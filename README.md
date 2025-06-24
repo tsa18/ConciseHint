@@ -1,7 +1,7 @@
 # ConciseHint: Boosting Efficient Reasoning via Continuous Concise Hints during Generation
 
 
-<a href="https://arxiv.org/abs/2506.04158"><img src="https://img.shields.io/badge/arXiv%20paper-2506.04158-b31b1b.svg" alt="arXiv"></a>
+<a href="https://arxiv.org/abs/2506.18810"><img src="https://img.shields.io/badge/arXiv%20paper-2506.18810-b31b1b.svg" alt="arXiv"></a>
 
 
 > **ConciseHint: Boosting Efficient Reasoning via Continuous Concise Hints during Generation**
