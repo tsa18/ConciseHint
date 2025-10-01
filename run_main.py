@@ -240,9 +240,29 @@ def eval_results(dataset, results, targets):
             extracted_last_k = Evaluator.extract_predicted_answer(result, last=3) 
             correct = correct or (isinstance(extracted_last_k, tuple) and any(grade_answer(target, answer) for answer in extracted_last_k)) # corner cases where \boxed is not in answer and the last number is also not the answer
         elif dataset=="gpqa_diamond":
+
+            def find_last_answer(response, strings):
+                indices = [response.rfind(string) for string in strings]
+                return response[max(indices):]
+            answer_patterns = [
+                "The correct answer is", r"\boxed{", 
+                "the correct answer is", "the correct answer would be", "Final Answer",
+                "the answer should be", "the answer is"
+            ]
+            result = find_last_answer(result, answer_patterns)
             correct = f"The correct answer is {target}" in result or f"The correct answer is **{target}**" in result or f"The correct answer is **{target}" in result \
-                       or f"The correct answer is <{target}>" in result  or f"The correct answer is <{target}" in result or r"\boxed{"+str(target) in result \
-                       or r"\boxed{\text{"+str(target) in result
+                        or f"The correct answer is <{target}>" in result  or f"The correct answer is <{target}" in result or r"\boxed{"+str(target) in result \
+                        or r"\boxed{\text{"+str(target) in result \
+                        or f"the correct answer is {target}"  in result \
+                        or f"**The correct answer is <Your choice among A, B, C, and D> {target}." in result \
+                        or f"the correct answer is option {target}" in result or f"the correct answer would be option {target}" in result \
+                        or f"Final Answer:** {target}" in result or f"the correct answer would be {target}" in result \
+                        or f"the answer should be {target}" in result \
+                        or f"the answer is {target}" in result \
+                        or f"the correct answer is **{target}" in result or f"The correct option is **{target}" in result or f"The correct answer is** <{target}" in result \
+                        or f"the correct answer is <{target}" in result or f"the correct answer is** <{target}" in result \
+                        or f"The correct answer is **<{target}" in result or f"the correct answer is **<{target}" in result 
+                        
         else:
             raise NotImplementedError
         correct_num += correct
