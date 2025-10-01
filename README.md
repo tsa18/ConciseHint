@@ -15,11 +15,11 @@
 > [xML Lab](https://sites.google.com/view/xml-nus), National University of Singapore
 > <br>
 
-![Demo](./assets/teaser.png)
+![Demo](./assets/method.png)
 
 
 
-We propose a framework dubbed  <strong>ConciseHint</strong>, which continuously encourages the reasoning model to speak concisely by injecting the textual hint (manually designed or trained on the concise data) during the token generation of the reasoning process.
+We propose a framework dubbed  <strong>ConciseHint</strong>, which continuously encourages the reasoning model to speak concisely by injecting the textual hint (manually designed or learned on the concise data) during the token generation of the reasoning process.
 
 
 
@@ -63,7 +63,7 @@ python -u run_main.py --model  Qwen/Qwen3-4B  --dataset gsm8k --repeat_exp_num 5
 
 
 ## Note
-This pape only includes the codes of the training-free ConciseHint. Please move to ConciseHint-T directory for the ConciseHint-T codes.
+This page only includes the codes of the training-free ConciseHint. Please move to ConciseHint-T directory for the ConciseHint-T codes.
 
 ## Acknowledgement
 The code framework is modified from the open-source github repository of Dynasor.
