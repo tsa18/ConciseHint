@@ -57,8 +57,8 @@ python -u run_main.py --model  Qwen/Qwen3-4B  --dataset gsm8k --repeat_exp_num 5
 
 ## Main results
 <div align="center">
-  <img src="./assets/table1.png" width="75%" />
-  <img src="./assets/table2.png" width="75%" /> 
+  <img src="./assets/table11.png" width="75%" />
+  <img src="./assets/table22.png" width="75%" /> 
 </div>
 
 
